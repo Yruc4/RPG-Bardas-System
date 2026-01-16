@@ -1,0 +1,201 @@
+/* LOGIN PAGE STYLES - ORDEM PARANORMAL */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Dark Theme Colors */
+  --bg-dark: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-accent: #2d3139;
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0b0;
+  --accent-primary: #8b5cf6;
+  --border-color: #3a3a3a;
+  --success: #10b981;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.login-box {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: var(--shadow);
+}
+
+.login-box h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 5px;
+  color: var(--accent-primary);
+  text-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 15px;
+  background: var(--bg-accent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.login-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #a78bfa 100%);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+.recent-players {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.recent-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#recent-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recent-player-btn {
+  padding: 10px 15px;
+  background: var(--bg-accent);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.recent-player-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Hide recent players if empty */
+#recent-players-list:empty ~ .recent-label {
+  display: none;
+}
+
+#recent-players-list:empty {
+  display: none;
+}
+
+/* Admin login styling */
+.admin-link {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.admin-button {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-button:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.admin-button.back-button {
+  width: 100%;
+  margin-top: 20px;
+}

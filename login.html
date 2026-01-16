@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Bardas System</title>
+    <link rel="stylesheet" href="css/login-style.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- PLAYER LOGIN -->
+        <div class="login-box" id="player-login-box">
+            <h1>Bardas System</h1>
+            <p class="subtitle">Ficha de Personagem</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="player-name-input">Nome do Jogador</label>
+                    <input 
+                        type="text" 
+                        id="player-name-input" 
+                        class="login-input" 
+                        placeholder="Digite seu nome"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="room-code-input">Código da Sala</label>
+                    <input 
+                        type="text" 
+                        id="room-code-input" 
+                        class="login-input" 
+                        placeholder="Digite o código da sala"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="login-button">Entrar</button>
+            </form>
+            
+            <div class="recent-players" id="recent-players-container">
+                <p class="recent-label">Jogadores Recentes</p>
+                <div id="recent-players-list"></div>
+            </div>
+
+            <div class="admin-link">
+                <button type="button" class="admin-button" onclick="showCreateAdminForm()">Criar Conta de Administrador</button>
+                <button type="button" class="admin-button" onclick="toggleAdminLogin()">Acesso Administrador</button>
+            </div>
+        </div>
+
+        <!-- ADMIN LOGIN -->
+        <div class="login-box" id="admin-login-box" style="display: none;">
+            <h1>Bardas System</h1>
+            <p class="subtitle">Painel do Administrador</p>
+            
+            <form id="admin-form">
+                <div class="form-group">
+                    <label for="admin-username">Usuário</label>
+                    <input 
+                        type="text" 
+                        id="admin-username" 
+                        class="login-input" 
+                        placeholder="Usuário"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="admin-password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="admin-password" 
+                        class="login-input" 
+                        placeholder="Senha"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="login-button">Acessar Painel</button>
+            </form>
+
+            <div class="admin-link">
+                <button type="button" class="admin-button back-button" onclick="toggleAdminLogin()">Voltar</button>
+            </div>
+        </div>
+
+        <!-- CREATE ADMIN ACCOUNT -->
+        <div class="login-box" id="create-admin-box" style="display: none;">
+            <h1>Bardas System</h1>
+            <p class="subtitle">Criar Conta de Administrador</p>
+            
+            <form id="create-admin-form">
+                <div class="form-group">
+                    <label for="new-admin-username">Usuário</label>
+                    <input 
+                        type="text" 
+                        id="new-admin-username" 
+                        class="login-input" 
+                        placeholder="Escolha um nome de usuário"
+                        autocomplete="off"
+                        required
+                        minlength="3"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="new-admin-password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="new-admin-password" 
+                        class="login-input" 
+                        placeholder="Escolha uma senha"
+                        autocomplete="off"
+                        required
+                        minlength="4"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-admin-password">Confirmar Senha</label>
+                    <input 
+                        type="password" 
+                        id="confirm-admin-password" 
+                        class="login-input" 
+                        placeholder="Confirme a senha"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="login-button">Criar Conta</button>
+            </form>
+
+            <div class="admin-link">
+                <button type="button" class="admin-button back-button" onclick="hideCreateAdminForm()">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

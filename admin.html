@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Bardas System</title>
+    <link rel="stylesheet" href="css/admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-title">
+                <h1>Painel do Administrador</h1>
+                <p>Gerenciamento de Fichas de Personagem</p>
+            </div>
+            <button class="logout-btn" onclick="logoutAdmin()">Sair</button>
+        </header>
+
+        <main class="admin-main">
+            <section class="admin-section">
+                <h2>Selecionar Jogador e Ficha</h2>
+
+                <!-- Step 1: Select Player -->
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        id="player-search-input" 
+                        class="search-input" 
+                        placeholder="Procurar jogador..."
+                    >
+                </div>
+
+                <div id="players-container" class="sheets-container">
+                    <p class="loading">Carregando jogadores...</p>
+                </div>
+
+                <!-- Step 2: Select Character for chosen player -->
+                <div id="selected-player-box" class="selected-player-box" style="display:none;">
+                    <h3 id="selected-player-title">Jogador:</h3>
+                    <button class="action-btn btn-view" id="clear-selected-player">Trocar Jogador</button>
+                </div>
+
+                <div class="search-bar" id="character-search-bar" style="display:none;">
+                    <input 
+                        type="text" 
+                        id="character-search-input" 
+                        class="search-input" 
+                        placeholder="Procurar personagem do jogador selecionado..."
+                    >
+                </div>
+
+                <div id="sheets-container" class="sheets-container">
+                    <p class="loading">Selecione um jogador para ver as fichas...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- CONFIRMATION MODAL -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p id="delete-message">Tem certeza que deseja deletar esta ficha?</p>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" onclick="closeDeleteModal()">Cancelar</button>
+                <button class="btn btn-delete" id="confirm-delete-btn" onclick="confirmDelete()">Deletar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionar Personagem - Bardas System</title>
+    <link rel="stylesheet" href="css/character-select-style.css">
+</head>
+<body>
+    <div class="character-select-container">
+        <header class="select-header">
+            <div class="header-content">
+                <h1> Bardas System</h1>
+                <p id="player-greeting">Bem-vindo, <span id="player-name-display">Jogador</span>!</p>
+            </div>
+            <button class="btn btn-logout" onclick="logoutFromSelect()">Trocar Jogador</button>
+        </header>
+
+        <main class="select-main">
+            <section class="characters-section">
+                <h2>Seus Personagens</h2>
+                <div id="characters-container" class="characters-grid">
+                    <!-- Characters will be loaded here dynamically -->
+                </div>
+            </section>
+
+            <section class="create-section">
+                <button class="btn btn-create" onclick="openCreateModal()">+ Criar Novo Personagem</button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Create New Character Modal -->
+    <div id="create-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCreateModal()">&times;</button>
+            <h2>Criar Novo Personagem</h2>
+            
+            <form id="create-character-form">
+                <div class="form-group">
+                    <label for="new-character-name">Nome do Personagem:</label>
+                    <input type="text" id="new-character-name" placeholder="Ex: Guerreiro Destemido" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-character-class">Classe (Opcional):</label>
+                    <select id="new-character-class">
+                        <option value="">Selecionar depois</option>
+                        <option value="combatente">Combatente</option>
+                        <option value="especialista">Especialista</option>
+                        <option value="ocultista">Ocultista</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="new-character-origin">Origem (Opcional):</label>
+                    <select id="new-character-origin">
+                        <option value="">Selecionar depois</option>
+                        <option value="academico">Acadêmico</option>
+                        <option value="agente-saude">Agente de Saúde</option>
+                        <option value="artista">Artista</option>
+                        <option value="atleta">Atleta</option>
+                        <option value="chef">Chef</option>
+                        <option value="criminoso">Criminoso</option>
+                        <option value="culista-arrependido">Culista Arrependido</option>
+                        <option value="desgarrado">Desgarrado</option>
+                        <option value="engenheiro">Engenheiro</option>
+                        <option value="executivo">Executivo</option>
+                        <option value="investigador">Investigador</option>
+                        <option value="lutador">Lutador</option>
+                        <option value="magnata">Magnata</option>
+                        <option value="mercenario">Mercenário</option>
+                        <option value="militar">Militar</option>
+                        <option value="operario">Operário</option>
+                        <option value="policial">Policial</option>
+                        <option value="religioso">Religioso</option>
+                        <option value="servidor-publico">Servidor Público</option>
+                        <option value="teorico-da-conspiracao">Teórico da Conspiração</option>
+                        <option value="T.I.">T.I.</option>
+                        <option value="trabalhador-rural">Trabalhador Rural</option>
+                        <option value="transeunte">Transeunte</option>
+                        <option value="universitario">Universitário</option>
+                        <option value="vitima">Vítima</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Criar Personagem</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal for Delete -->
+    <div id="delete-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Deletar Personagem</h2>
+            <p>Tem certeza que deseja deletar <strong id="delete-char-name"></strong>?</p>
+            <p class="warning-text">Esta ação é irreversível.</p>
+            
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="confirmDelete()">Deletar</button>
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/character-select.js"></script>
+</body>
+</html>

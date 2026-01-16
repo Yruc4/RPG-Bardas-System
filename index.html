@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha -  Bardas System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ABILITY SELECTION MODAL -->
+    <div id="ability-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Escolha uma Habilidade para NEX 15</h2>
+                <button class="modal-close" onclick="closeAbilityModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-description">Você atingiu um novo nível! Escolha uma habilidade para adicionar ao seu Poder de Classe.</p>
+                <div id="abilities-list" class="abilities-selection-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-tertiary" onclick="closeAbilityModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveSelectedAbilityFromModal()">Confirmar Seleção</button>
+            </div>
+        </div>
+        <div class="modal-overlay" onclick="closeAbilityModal()"></div>
+    </div>
+
+    <!-- TRANSCENDER ELEMENT SELECTION MODAL -->
+    <div id="transcender-modal" class="modal" style="display: none;">
+        <div class="modal-content transcender-modal-content">
+            <div class="modal-header">
+                <h2>Transcender - Escolha um Elemento</h2>
+                <button class="modal-close" onclick="closeTranscenderModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Escolha um elemento paranormal para transcender:</p>
+                <div class="element-selection-grid">
+                    <div class="element-card" data-element="sangue">
+                        <div class="element-title">SANGUE</div>
+                        <div class="element-preview"></div>
+                    </div>
+                    <div class="element-card" data-element="morte">
+                        <div class="element-title">MORTE</div>
+                        <div class="element-preview"></div>
+                    </div>
+                    <div class="element-card" data-element="conhecimento">
+                        <div class="element-title">CONHECIMENTO</div>
+                        <div class="element-preview"></div>
+                    </div>
+                    <div class="element-card" data-element="energia">
+                        <div class="element-title">ENERGIA</div>
+                        <div class="element-preview"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-tertiary" onclick="closeTranscenderModal()">Voltar</button>
+            </div>
+        </div>
+        <div class="modal-overlay" onclick="closeTranscenderModal()"></div>
+    </div>
+
+    <!-- ELEMENT ABILITIES MODAL -->
+    <div id="element-abilities-modal" class="modal" style="display: none;">
+        <div class="modal-content element-abilities-modal-content">
+            <div class="modal-header">
+                <h2>Transcender - Sangue</h2>
+                <button class="modal-close" onclick="closeElementAbilitiesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="element-abilities-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-tertiary" onclick="closeElementAbilitiesModal()">Voltar</button>
+                <button class="btn btn-primary" onclick="confirmElementSelection()">Confirmar Seleção</button>
+            </div>
+        </div>
+        <div class="modal-overlay" onclick="closeElementAbilitiesModal()"></div>
+    </div>
+
+    <!-- PERITO SKILL SELECTION MODAL -->
+    <div id="perito-skill-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Perito - Escolha 2 Perícias</h2>
+                <button class="modal-close" onclick="closePeritoSkillModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione exatamente 2 perícias para usar com a habilidade Perito (exceto Luta e Pontaria):</p>
+                <div class="perito-skills-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-tertiary" onclick="closePeritoSkillModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="confirmPeritoSkills()">Confirmar</button>
+            </div>
+        </div>
+        <div class="modal-overlay" onclick="closePeritoSkillModal()"></div>
+    </div>
+
+    <div class="container">
+        <!-- PAGE 1 -->
+        <div class="page">
+            <!-- HEADER -->
+            <header class="character-header">
+                <div class="header-title">
+                    <h1>Bardas System</h1>
+                </div>
+                <div class="header-names">
+                    <section class="name-box">
+                        <label>Nome do Personagem</label>
+                        <input type="text" class="input-field" id="character-name" placeholder="Ex: João Silva">
+                    </section>
+                    <section class="name-box">
+                        <label>Nome do Jogador</label>
+                        <input type="text" class="input-field" id="player-name" placeholder="Ex: Maria">
+                    </section>
+                </div>
+            </header>
+
+            <!-- MAIN CONTENT - TWO COLUMNS -->
+            <div class="page-content">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <section class="info-box">
+                        <label>Origem</label>
+                        <select class="input-field" id="origem">
+                            <option value="">Selecionar</option>
+                            <option value="academico">Acadêmico</option>
+                            <option value="agente-saude">Agente de Saúde</option>
+                            <option value="amnésico">Amnésico</option>
+                            <option value="artista">Artista</option>
+                            <option value="atleta">Atleta</option>
+                            <option value="chef">Chef</option>
+                            <option value="criminoso">Criminoso</option>
+                            <option value="culista-arrependido">Culista Arrependido</option>
+                            <option value="desgarrado">Desgarrado</option>
+                            <option value="engenheiro">Engenheiro</option>
+                            <option value="executivo">Executivo</option>
+                            <option value="investigador">Investigador</option>
+                            <option value="lutador">Lutador</option>
+                            <option value="magnata">Magnata</option>
+                            <option value="mercenario">Mercenário</option>
+                            <option value="militar">Militar</option>
+                            <option value="operario">Operário</option>
+                            <option value="policial">Policial</option>
+                            <option value="religioso">Religioso</option>
+                            <option value="servidor-publico">Servidor Público</option>
+                            <option value="teorico-da-conspiracao">Teórico da Conspiração</option>
+                            <option value="trabalhador-rural">Trabalhador Rural</option>
+                            <option value="transeunte">Transeunte</option>
+                            <option value="universitario">Universitário</option>
+                            <option value="vitima">Vítima</option>
+                            <option value="T.I.">T.I.</option>
+                        </select>
+                    </section>
+
+                    <div class="info-row-two">
+                        <section class="info-box">
+                            <label>Classe</label>
+                            <select class="input-field" id="classe">
+                                <option value="">Selecionar</option>
+                                <option value="combatente">Combatente</option>
+                                <option value="especialista">Especialista</option>
+                                <option value="ocultista">Ocultista</option>
+                            </select>
+                        </section>
+
+                        <section class="info-box">
+                            <label>Trilha</label>
+                            <select class="input-field" id="trilha">
+                                <option value="">Selecionar</option>
+                            </select>
+                        </section>
+                    </div>
+
+                    <!-- AFINIDADE -->
+                    <section class="info-box">
+                        <label>Afinidade</label>
+                        <select class="input-field" id="afinidade">
+                            <option value="">Selecionar</option>
+                            <option value="sangue">Sangue</option>
+                            <option value="morte">Morte</option>
+                            <option value="conhecimento">Conhecimento</option>
+                            <option value="energia">Energia</option>
+                            <option value="medo">Medo</option>
+                        </select>
+                    </section>
+
+                    <!-- ATTRIBUTES GRID -->
+                    <section class="attributes-section">
+                        <h3>Atributos</h3>
+                        <div class="attributes-grid-2x3">
+                            <div class="attr-item">
+                                <label>Força</label>
+                                <input type="number" class="attr-input" id="for" value="1" min="1" max="20">
+                                <span class="attr-label">FOR</span>
+                            </div>
+                            <div class="attr-item">
+                                <label>Agilidade</label>
+                                <input type="number" class="attr-input" id="agi" value="1" min="1" max="20">
+                                <span class="attr-label">AGI</span>
+                            </div>
+                            <div class="attr-item">
+                                <label>Inteligência</label>
+                                <input type="number" class="attr-input" id="int" value="1" min="1" max="20">
+                                <span class="attr-label">INT</span>
+                            </div>
+                            <div class="attr-item">
+                                <label>Presença</label>
+                                <input type="number" class="attr-input" id="pre" value="1" min="1" max="20">
+                                <span class="attr-label">PRE</span>
+                            </div>
+                            <div class="attr-item">
+                                <label>Vigor</label>
+                                <input type="number" class="attr-input" id="vig" value="1" min="1" max="20">
+                                <span class="attr-label">VIG</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- RESOURCES - BELOW ATTRIBUTES -->
+                    <section class="resources-section">
+                        <div class="resource-boxes">
+                            <div class="resource-box-group">
+                                <div class="resource-label-top">NEX</div>
+                                <select class="res-input" id="nex">
+                                    <option value="0">0</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                    <option value="60">60</option>
+                                    <option value="65">65</option>
+                                    <option value="70">70</option>
+                                    <option value="75">75</option>
+                                    <option value="80">80</option>
+                                    <option value="85">85</option>
+                                    <option value="90">90</option>
+                                    <option value="95">95</option>
+                                    <option value="99">99</option>
+                                </select>
+                            </div>
+                            <div class="resource-box-group">
+                                <div class="resource-label-top">PE / RODADA</div>
+                                <input type="number" class="res-input" id="pe_rodada">
+                            </div>
+                            <div class="resource-box-group">
+                                <div class="resource-label-top">DESL</div>
+                                <input type="text" class="res-input" id="desl">
+                            </div>
+                            <div class="resource-box-group">
+                                <div class="resource-label-top">DT DE RITUAIS</div>
+                                <input type="text" class="res-input" id="dt_rituais">
+                            </div>
+                        </div>
+                        <div class="resource-boxes-row">
+                            <div class="resource-dual-box">
+                                <div class="resource-label-top">PV</div>
+                                <input type="number" class="res-input" id="PV" value="0">
+                                <div class="resource-label-bottom">PONTOS DE VIDA</div>
+                            </div>
+                            <div class="resource-dual-box">
+                                <div class="resource-label-top">PE</div>
+                                <input type="number" class="res-input" id="PE" value="0">
+                                <div class="resource-label-bottom">PONTOS DE ESFORÇO</div>
+                            </div>
+                        </div>
+                        <div class="defesa-row">
+                            <div class="defesa-box">
+                                <div class="defesa-label">DEFESA</div>
+                                <input type="number" class="res-input" id="defesa" value="10" readonly>
+                                <div class="defesa-formula">= 10 + AGI + Equipamentos/Outros</div>
+                                <div class="defesa-sub">Equipamentos / Outros: <input type="number" id="equipamentos" class="res-input" value="0" /></div>
+                            </div>
+                            <div class="sanidade-box">
+                                <div class="resource-label-top">SAN</div>
+                                <input type="number" class="res-input" id="SAN" value="0">
+                                <div class="resource-label-bottom">SANIDADE</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- PROTECTION & RESISTANCE -->
+                    <div class="info-row-two">
+                        <section class="info-box">
+                            <label>Proteção</label>
+                            <select class="input-field" id="protecao">
+                                <option value="">Selecionar</option>
+                                <option value="leve">Leve</option>
+                                <option value="pesada">Pesada</option>
+                            </select>
+                        </section>
+
+                        <section class="info-box">
+                            <label>Resistências</label>
+                            <textarea class="textarea-field" placeholder="Listar resistências..."></textarea>
+                        </section>
+                    </div>
+
+                    
+
+                </div>
+
+                <!-- RIGHT COLUMN - SKILLS TABLE -->
+                <div class="right-column">
+                    <section class="skills-section">
+                        <h3>Perícias</h3>
+                        <table class="skills-table">
+                            <thead>
+                                <tr>
+                                    <th>PERÍCIA</th>
+                                    <th>DADO</th>
+                                    <th>BÔNUS</th>
+                                    <th>T</th>
+                                    <th>OUTROS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Acrobacia</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Adestramento *</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Artes *</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Atletismo</td><td>FOR</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Atualidades</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Ciências *</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Crime *</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Diplomacia</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Enganação</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Fortitude</td><td>VIG</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Furtividade</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Iniciativa</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Intimidação</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Intuição</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Investigação</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Luta</td><td>FOR</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Medicina</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Ocultismo *</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Percepção</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Pilotagem *</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Pontaria</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Profissão *</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Reflexos</td><td>AGI</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Religião *</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Sobrevivência</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Tática *</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Tecnologia *</td><td>INT</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                                <tr><td>Vontade</td><td>PRE</td><td><input type="number" class="skill-bonus" value="0" readonly></td><td><select class="skill-training"><option value="">Nenhum</option><option value="treinado">Treinado</option><option value="veterano">Veterano</option><option value="expert">Expert</option></select></td><td><input type="text" class="skill-notes"></td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+
+            <!-- TAB SELECTOR -->
+            <div class="tab-selector">
+                <label for="section-tabs">Seção:</label>
+                <select id="section-tabs" class="input-field">
+                    <option value="ataques">Ataques</option>
+                    <option value="habilidades">Habilidades & Rituais</option>
+                    <option value="prestigio">Pontos de Prestígio & Inventário</option>
+                    <option value="descricao">Descrição do Personagem</option>
+                </select>
+            </div>
+
+            <!-- TAB CONTENT -->
+            <div class="tab-content-wrapper">
+                <!-- ATTACKS TAB -->
+                <div id="tab-ataques" class="tab-content active">
+                    <section class="attacks-section">
+                        <h4>Ataques</h4>
+                        <table class="attacks-table">
+                            <thead>
+                                <tr>
+                                    <th>TESTE</th>
+                                    <th>DANO</th>
+                                    <th>Critico/Alcance/Especial</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                    <td><input type="text" class="table-input"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+
+                <!-- ABILITIES TAB -->
+                <div id="tab-habilidades" class="tab-content">
+                    <section class="section">
+                        <h2 class="section-title">Habilidades & Rituais</h2>
+                        <table class="abilities-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Custo</th>
+                                    <th>Página</th>
+                                    <th>Descritivo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="abilities-tbody">
+                                <tr><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><textarea class="table-input" rows="1"></textarea></td></tr>
+                                <tr><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><textarea class="table-input" rows="1"></textarea></td></tr>
+                                <tr><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><input type="text" class="table-input"></td><td><textarea class="table-input" rows="1"></textarea></td></tr>
+                            </tbody>
+                        </table>
+                        <button class="add-row-btn" onclick="addAbilityRow()">+ Adicionar Linha</button>
+                    </section>
+                </div>
+
+                <!-- PRESTIGE & INVENTORY TAB -->
+                <div id="tab-prestigio" class="tab-content">
+                    <section class="section">
+                        <h2 class="section-title">Pontos de Prestígio</h2>
+                        <div class="prestige-grid">
+                            <div class="prestige-level"><label>I</label><input type="checkbox"></div>
+                            <div class="prestige-level"><label>II</label><input type="checkbox"></div>
+                            <div class="prestige-level"><label>III</label><input type="checkbox"></div>
+                            <div class="prestige-level"><label>IV</label><input type="checkbox"></div>
+                        </div>
+                    </section>
+
+                    <section class="section">
+                        <h2 class="section-title">Inventário</h2>
+                        <div class="inventory-header">
+                            <div><label>Crédito</label><input type="number" value="1000"></div>
+                            <div><label>Limite Máximo</label><input type="number" value="10"></div>
+                        </div>
+                        <table class="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>ITEM</th>
+                                    <th>CATEGORIA</th>
+                                    <th>ESPAÇOS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number"></td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+
+                <!-- DESCRIPTION TAB -->
+                <div id="tab-descricao" class="tab-content">
+                    <section class="section">
+                        <h2 class="section-title">Descrição do Personagem</h2>
+                        <div class="description-grid">
+                            <div class="description-box">
+                                <label>Aparência</label>
+                                <textarea placeholder="Descreva a aparência..."></textarea>
+                            </div>
+                            <div class="description-box">
+                                <label>Personalidade</label>
+                                <textarea placeholder="Descreva a personalidade..."></textarea>
+                            </div>
+                            <div class="description-box">
+                                <label>Histórico</label>
+                                <textarea placeholder="Histórico e background..."></textarea>
+                            </div>
+                            <div class="description-box">
+                                <label>Objetivo</label>
+                                <textarea placeholder="Qual é seu objetivo..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2 - IDE (PODER DE) -->
+        <div class="page" id="ide-page">
+            <header class="character-header">
+                <div class="header-title">
+                    <h1 id="ide-page-title">Poder de Combatente</h1>
+                </div>
+                <div class="header-names">
+                    <section class="name-box">
+                        <label>Personagem</label>
+                        <input type="text" class="input-field" id="ide-character-name" placeholder="Nome do personagem" readonly>
+                    </section>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <!-- Selected Abilities Section -->
+                <div class="ide-section">
+                    <h2>Poderes Selecionados</h2>
+                    <div id="ide-selected-abilities" class="ide-selected-abilities">
+                        <!-- Populado dinamicamente pelo JS -->
+                    </div>
+                </div>
+
+                <!-- All Available Abilities Section -->
+                <div class="ide-section">
+                    <h2>Todas as Habilidades Disponíveis</h2>
+                    <div id="ide-abilities-container" class="ide-abilities-container">
+                        <!-- Populado dinamicamente pelo JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3 - RITUAIS -->
+        <div class="page" id="rituais-page" style="display:none;">
+            <header class="character-header">
+                <div class="header-title">
+                    <h1>Ficha de Rituais</h1>
+                </div>
+                <div class="header-names">
+                    <section class="name-box">
+                        <label>Personagem</label>
+                        <input type="text" class="input-field" id="rituais-character-name" placeholder="Nome do personagem" readonly>
+                    </section>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <!-- Rituals Stats Section -->
+                <div class="ritual-stats-section">
+                    <div class="ritual-stat-box">
+                        <label>Círculo Máximo</label>
+                        <input type="text" class="input-field" id="ritual-circulo-max" readonly>
+                    </div>
+                    <div class="ritual-stat-box">
+                        <label>Rituais Conhecidos</label>
+                        <input type="number" class="input-field" id="ritual-conhecidos" min="0">
+                    </div>
+                    <div class="ritual-stat-box">
+                        <label>DT dos Rituais</label>
+                        <input type="text" class="input-field" id="ritual-dt" readonly>
+                    </div>
+                </div>
+
+                <!-- Known Rituals Section -->
+                <div class="ide-section">
+                    <h2>Rituais Conhecidos</h2>
+                    <button class="btn btn-secondary" onclick="addRitualRow()" style="margin-bottom: 15px;">+ Adicionar Ritual</button>
+                    <div class="table-container">
+                        <table class="abilities-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">Nome</th>
+                                    <th style="width: 10%;">Círculo</th>
+                                    <th style="width: 10%;">Elemento</th>
+                                    <th style="width: 10%;">Execução</th>
+                                    <th style="width: 10%;">Alcance</th>
+                                    <th style="width: 10%;">Alvo</th>
+                                    <th style="width: 10%;">Duração</th>
+                                    <th style="width: 15%;">Resistência</th>
+                                    <th style="width: 5%;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rituais-tbody">
+                                <!-- Rituais will be added here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Ritual Description Section -->
+                <div class="ide-section">
+                    <h2>Descrição do Ritual Selecionado</h2>
+                    <div id="ritual-description-container" class="ritual-description-box">
+                        <p style="opacity: 0.7; text-align: center;">Clique em um ritual acima para ver sua descrição</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <section class="button-section">
+            <button class="btn btn-primary" onclick="printCharacterSheet()">Imprimir</button>
+            <button class="btn btn-secondary" onclick="exportCharacterSheet()">Exportar JSON</button>
+            <button class="btn btn-tertiary" onclick="logoutPlayer()">Trocar Jogador</button>
+            <button class="btn btn-info" id="show-ide-btn" onclick="toggleIdePage()" style="display:none;">Ver Poder de Classe</button>
+            <button class="btn btn-info" id="show-rituais-btn" onclick="toggleRituaisPage()" style="display:none;">Ver Rituais</button>
+        </section>
+    </div>
+
+    <script src="js/character-sheet.js"></script>
+</body>
+</html>
