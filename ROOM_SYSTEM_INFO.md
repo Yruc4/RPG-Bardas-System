@@ -8,10 +8,7 @@ The system now supports multiple administrators, each with their own private roo
 ### 1. **Admin Account Creation**
 - Admins can create their own accounts at the login screen
 - Each admin gets a unique 6-character room code (e.g., `ABC123`)
-- The default admin account still exists:
-  - Username: `BigBard`
-  - Password: `mumesar`
-  - Room Code: `BARD00`
+
 
 ### 2. **Player Login**
 - Players must enter their name AND a room code
